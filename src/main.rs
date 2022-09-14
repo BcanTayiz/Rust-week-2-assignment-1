@@ -35,6 +35,10 @@ fn main () {
         println!("Verify: {}", &blockchain.verify());
     }
 
+    blockchain.blocks[3].hash[8] = 4;
+    
+    println!("Verify: {}",&blockchain.verify());
+
 
 }
 
