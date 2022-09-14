@@ -1,8 +1,9 @@
 use blockchainlib::*;
 
 fn main () {
+    let difficulty = 0x000ffffffffffffffffffffffffffff;
     let mut block = Block::new(0,0,vec![0;32],0,"Genesis Block!".to_owned(),
-    0x0008fffffffffffffffffffffffffff);
+    difficulty);
 
     block.hash = block.hash();
 

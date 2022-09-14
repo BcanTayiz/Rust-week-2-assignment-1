@@ -83,3 +83,5 @@ mod block;
 pub use crate::block::Block;
 mod hashable;
 pub use crate::hashable::Hashable;
+mod blockchain;
+pub use crate::blockchain::Blockchain;
