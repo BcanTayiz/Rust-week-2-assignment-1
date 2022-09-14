@@ -19,17 +19,9 @@ fn main () {
         blocks: vec![block],
     };
 
-    for i in 1..10{
-        let mut block = Block::new(i,0,last_hash,0,"Another Block!".to_owned(),
-        difficulty);
+    println!("Verify: {}", &blockchain.verify());
 
-        block.mine();
-        println!("Mined block {:?}",block);
-        
-        last_hash = block.hash.clone();
-
-        blockchain.blocks.push(block);
-    }
+    return ;
 
 
 }
