@@ -21,7 +21,19 @@ fn main () {
 
     println!("Verify: {}", &blockchain.verify());
 
-    return ;
+    for i in 1..10{
+        let mut block = Block::new(i,now(),last_hash,0,"Another Block!".to_owned(),
+        difficulty);
+
+        block.mine();
+        println!("Mined block {:?}",block);
+        
+        last_hash = block.hash.clone();
+
+        blockchain.blocks.push(block);
+
+        println!("Verify: {}", &blockchain.verify());
+    }
 
 
 }

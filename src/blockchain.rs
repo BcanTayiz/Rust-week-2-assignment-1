@@ -33,6 +33,6 @@ impl Blockchain{
             }
         };
 
-        return false;
+        true
     }
 }
