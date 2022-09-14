@@ -46,6 +46,8 @@ impl Blockchain{
                     return Err(BlockValidationErr::InvalidCoinbaseTransaction)
                 }
                 let mut block_spent: HashSet<Hash> = HashSet::new();
+                let mut block_created: HashSet<Hash> = HashSet::new();
+                let mut total_fee = 0;
 
                 for transaction in transactions{
                     let input_hashes = transaction.input_hashes();
@@ -53,11 +55,35 @@ impl Blockchain{
                     if(&input_hashes - &self.unspent_outputs).is_empty() || (&input_hashes & &block_spent).is_empty(){
                         return Err(BlockValidationErr::InvalidInput)
                     }
+
+                   
+
+                    let input_value = transaction.input_value();
+                    let output_value = transaction.output_value();
+
+                    if output_value > input_value{
+                        return Err(BlockValidationErr::InsufficientInputValue)
+                    }
+
+                    let fee = input_value - output_value;
+                    
+                    total_fee += fee;
+
+                    block_spent.extend(input_hashes)
+                    block_created.extend(transaction.output_hashes())
                 }
+
+                if coinbase.output_value() < total_fee{
+                    return Err(BlockValidationErr::InvalidCoinbaseTransaction)
+                }else{
+                    block_created.extend(coinbase.output_hashes())
+                }
+
+                self.unspent_outputs.retain(|output| !block_spent.contains(output));
+                self.unspent_outputs.extend(block_created);
             }
 
-            
-
+            self.blocks.push(block);
             Ok(())
         }
 
