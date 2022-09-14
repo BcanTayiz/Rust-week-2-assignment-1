@@ -17,8 +17,8 @@ impl Debug for Block {
             &self.index,
             &hex::encode(&self.hash),
             &self.timestamp,
-            &self.nonce,
-            &self.difficulty
+            &self.payload,
+            &self.nonce
         )
     }
 }
